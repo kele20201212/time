@@ -1,0 +1,46 @@
+<ion-view title="购票">
+    <div class="menu-box">
+        <div class="menu-box1">
+            <div class="menu-left">北京 <i class="icon ion-chevron-down"></i></div>
+            <div class="menu-mid">
+                <div class="menu-mid-left">电影</div>
+                <div  class="menu-mid-right">影院</div>
+            </div>
+            <div class="menu-right"><i class="icon ion-ios-search-strong"></i></div>
+        </div>
+        <div class="menu-bottom">
+            <div class="menu-bottom-left">正在热映</div>
+            <div class="menu-bottom-right">即将上映</div>
+        </div>
+    </div>
+    <!--中间内容-->
+    <ion-content>
+        <!--下拉刷新-->
+        <div ng-if="!loading">
+            <ion-spinner icon="lines"></ion-spinner>
+        </div>
+        <div ng-if="loading">
+            <!--下拉刷新-->
+            <ion-refresher pulling-text="下拉刷新..." on-refresh="doRefresh1()">
+            </ion-refresher>
+
+            <div class="has-header" id="content">
+                <div class="item item-thumbnail-left" ng-repeat="item in hot" >
+                    <img src="{{item.img}}">
+                    <h3>{{item.t}} <span class="sale-score" ng-if="item.r!='-1'">{{item.r}}</span></h3>
+                    <p class="text-detail1" ng-if="item.r!='-1'">"{{item.commonSpecial}}</p>
+                    <p class="text-detail1" ng-if="item.r=='-1'">{{item.movieType}}</p>
+                    <p class="text-detail2">{{item.rd}}上映</p>
+                    <p class="text-detail2">影院 {{item.cC}}场 {{item.d}}</p>
+                    <span class="span1" ng-if="item.is3D">3D</span>
+                    <span class="span1" ng-if="item.isIMAX3D">中国巨幕</span>
+                    <span class="span1" ng-if="item.isDMAX">DMAX</span>
+                    <span class="span1" ng-if="item.isIMAX">IMAX</span>
+                    <span class="span2" ng-if="item.r!='-1'">购票</span>
+                    <span class="span2 span3" ng-if="item.r=='-1'">预售</span>
+                </div>
+             </div>
+        </div>
+    </ion-content>
+
+</ion-view>

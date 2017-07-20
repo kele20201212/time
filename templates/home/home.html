@@ -1,0 +1,156 @@
+<ion-view title="Mtime">
+    <ion-content>
+    <!--下拉刷新-->
+        <div ng-if="!loading">
+            <ion-spinner icon="circles"></ion-spinner>
+        </div>
+        <div ng-if="loading">
+            <!--下拉刷新-->
+            <ion-refresher pulling-text="下拉刷新..." on-refresh="doRefresh()">
+            </ion-refresher>
+
+            <!--轮播图-->
+            <ion-slide-box slide-interval="1000" does-continue="true" auto-play="true">
+                <ion-slide ng-repeat="data in pic" class="poster">
+                    <img src="{{data.img}}" alt="">
+                </ion-slide>
+            </ion-slide-box>
+        </div>
+
+        <!--搜索框-->
+        <div class="button" id="buttonSearch">
+            <i class="icon ion-ios-search"></i>
+            影片/影院/影人，任你搜
+            <span class="shuxian"></span>
+            <i class="icon ion-qr-scanner"></i>
+        </div>
+        <div class="movie-saling">
+            <span class="padding">
+                正在售票 . 北京
+                <i class="icon ion-ios-arrow-down" style="color: darkgrey"></i>
+            </span>
+            <span class="padding">
+                共49部
+                <i class="icon ion-ios-arrow-right" style="color: darkgrey"></i>
+            </span>
+        </div>
+
+       <!--横向滚动-->
+        <ion-scroll direction="x" class="scroll-box">
+            <div class="home-movie-list">
+                <div class="home-movie-item" ng-repeat="m in picScroll">
+                    <img class="imgChange" src="{{m.img}}" alt="">
+                    <div class="imax" ng-if="m.isIMAX3D">IMAX3D</div>
+                    <div class="score">{{m.ratingFinal}}</div>
+                    <div class="movieName">{{m.titleCn}}</div>
+                    <div class="ticket"  ng-if="m.ratingFinal!='-1'">购票</div>
+                    <div class="ticket ticketing" ng-if="m.ratingFinal=='-1'">预售</div>
+                </div>
+            </div>
+
+        </ion-scroll>
+
+        <!--<ion-scroll direction="x">-->
+            <!--<div class="home-movie-list">-->
+                <!--<div class="home-movie-item" ng-repeat="item in picScroll">-->
+                    <!--<img class="imgChange" src="../img/logo.jpeg" alt="">-->
+                    <!--<div class="imax" ng-if="item.isIMAX3D">IMAX3D</div>-->
+                    <!--<div class="score">{{item.ratingFinal}}</div>-->
+                    <!--<div class="movieName">{{item.titleCn}}</div>-->
+                    <!--<div class="ticket" ng-if="item.isHot">购票</div>-->
+                    <!--<div class="ticket ticketing" ng-if="!item.isHot">预售</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</ion-scroll>-->
+
+
+        <div class="row padding">
+            <div class="col-50">
+                即将上映
+                <span>
+                    .52部
+                    <i class="icon ion-ios-arrow-right"></i>
+                </span>
+            </div>
+            <div class="col-50">
+                同城影院
+                <span>
+                    .186家
+                     <i class="icon ion-ios-arrow-right"></i></div>
+                </span>
+        </div>
+
+        <!--分割线-->
+        <div class="divider"></div>
+
+        <!--电影商城 全部商品-->
+        <div class="movie-saling movie-saling1">
+            <span class="padding">
+                电影商城
+            </span>
+            <span class="padding">
+                全部商品
+                <i class="icon ion-ios-arrow-right" style="color: darkgrey"></i>
+            </span>
+        </div>
+        <!--电影商城  图片-->
+        <div>
+            <div class="home-mall-row1">
+                <div ng-repeat="mall in data | limitTo:4"
+                     style="background: url({{mall.image}}) no-repeat;background-size: contain">
+                </div>
+            </div>
+
+            <div class="home-mall-row2">
+                <div ng-repeat="mall in data | limitTo:2:4"
+                     style="background: url({{mall.image}}) no-repeat;background-size: contain;">
+                </div>
+            </div>
+        </div>
+        <!--分割线-->
+        <div class="divider"></div>
+
+        <!--时光精选-->
+        <div class="movie-saling movie-saling1 movie-saling2">
+            <span class="padding">
+                时光精选
+            </span>
+            <span class="padding">
+                全部
+                <i class="icon ion-ios-arrow-right" style="color: darkgrey"></i>
+            </span>
+        </div>
+
+        <!--简讯-->
+        <div class="padding home-time-news" ng-repeat="data in mtime" ng-if="data.tag=='简讯'">
+            <span>简讯</span>
+            <img src="{{data.img1}}">
+            <h4>{{data.title}}</h4>
+            <p class="home-time-text">{{data.content}}</p>
+            <span class="home-time-left">{{data.time}} </span>
+            <span class="home-time-right"> {{date.type}}</span>
+        </div>
+        <!--图集-->
+        <div class="padding home-time-pics" ng-repeat="data in mtime" ng-if="data.tag=='图集'">
+            <span>图集</span>
+            <h4>{{data.title}}</h4>
+            <p class="home-time-text">{{data.content}}</p>
+            <div class="padding ">
+                <img src="{{data.img1}}" alt="">
+                <img src="{{data.img2}}" alt="">
+                <img src="{{data.img3}}" alt="">
+            </div>
+            <span class="home-time-left">{{data.time}}</span>
+            <span class="home-time-right">评论{{date.type}}</span>
+        </div>
+        <!--头条-->
+        <div class="padding home-time-news" ng-repeat="data in mtime" ng-if="data.tag=='影评'">
+            <span id="touTiao">影评</span>
+            <img  class="toutiao-img" src="{{data.userImage}}">
+            <h4>{{data.title}}</h4>
+            <span class="home-time-left">{{data.nickname}}</span>
+            <p class="home-time-text">{{data.summaryInfo}}</p>
+        </div>
+
+    </ion-content>
+</ion-view>
